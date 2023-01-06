@@ -384,4 +384,4 @@ async def desc(ctx,poke):
 
 
 keep_alive()
-bot.run("NzkzOTQxNjExNDE4NjE1ODI5.X-zlvg.srjNPwoWNQd-nrrX2nKN-1ZZkUc")
+#bot.run("")
