@@ -5,14 +5,16 @@ import urllib.request
 import cv2
 import re
 #pip install git+https://github.com/Pycord-Development/pycord
-def pokemon_name(pokemon):
+def get_name(pokemon):
   if pokemon in data_en.keys():
-   pass
+   pokemon_fr=data_en[pokemon.lower().capitalize()]
+   pokemon=pokemon.lower().capitalize()
   else:
+   pokemon_fr=pokemon.lower().capitalize()
    pokemon=data_fr[pokemon.capitalize()]
-  return pokemon
+  return [pokemon,pokemon_fr]
 def get_front_sprite(pokemon):
-      pokemon=pokemon_name(pokemon)
+      pokemon=get_name(pokemon)[0]
       url = f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon.lower()}/front.png'
       with urllib.request.urlopen(url) as url:
           image_data = url.read()
@@ -30,7 +32,6 @@ def get_data(pokemon):
         in_pokemon_scope=False
         for row in content:
             if in_pokemon_scope:
-                print(row)
                 pokemon_data.append(row)
             if pokemon.upper() in row:
                 in_pokemon_scope=True
