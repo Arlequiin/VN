@@ -18,6 +18,7 @@ bs4 = "^0.0.1"
 wikipedia = "^1.4.0"
 python-dotenv = "^0.21.0"
 removebg = "^0.04"
+opencv-python = "^4.7.0"
 
 [tool.poetry.dev-dependencies]
 

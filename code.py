@@ -1,7 +1,9 @@
+from rembg import remove
 from PIL import Image
 from pokemon import *
 import urllib.request
-from removebg import RemoveBg
+import cv2
+#pip install git+https://github.com/Pycord-Development/pycord
 def get_front_sprite(pokemon):
       if pokemon in data_en.keys():
         pass
@@ -12,8 +14,4 @@ def get_front_sprite(pokemon):
           image_data = url.read()
       with open('temp.png', 'wb') as f:
           f.write(image_data)
-      input = Image.open('temp.png')
-      rmbg = RemoveBg("YOUR-API-KEY", "error.log")
-      rmbg.remove_background_from_img_file("temp.png")
-      output.save("temp.png")
       return "temp.png"
