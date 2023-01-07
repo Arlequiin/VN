@@ -318,6 +318,32 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "numpy"
+version = "1.24.1"
+description = "Fundamental package for array computing in Python"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[[package]]
+name = "opencv-python"
+version = "4.7.0.68"
+description = "Wrapper package for OpenCV python bindings."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+numpy = [
+    {version = ">=1.21.0", markers = "python_version <= \"3.9\" and platform_system == \"Darwin\" and platform_machine == \"arm64\""},
+    {version = ">=1.21.2", markers = "python_version >= \"3.10\""},
+    {version = ">=1.21.4", markers = "python_version >= \"3.10\" and platform_system == \"Darwin\""},
+    {version = ">=1.19.3", markers = "python_version >= \"3.6\" and platform_system == \"Linux\" and platform_machine == \"aarch64\" or python_version >= \"3.9\""},
+    {version = ">=1.17.0", markers = "python_version >= \"3.7\""},
+    {version = ">=1.17.3", markers = "python_version >= \"3.8\""},
+]
+
+[[package]]
 name = "parso"
 version = "0.8.2"
 description = "A Python Parser"
@@ -404,6 +430,17 @@ python-versions = ">=3.7"
 
 [package.extras]
 cli = ["click (>=5.0)"]
+
+[[package]]
+name = "removebg"
+version = "0.04"
+description = "A Python API wrapper for removing background using remove.bg's API"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests = "*"
 
 [[package]]
 name = "requests"
@@ -528,7 +565,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f79b690ce477778dba6bd9a73a4fa58db863b879beaf233125c29cea6f083efd"
+content-hash = "8a0719e8c5ed09829106568233dd48afaa470d8bf1dac1c47f10588824546073"
 
 [metadata.files]
 aiohttp = []
@@ -558,6 +595,8 @@ lxml = []
 markupsafe = []
 matplotlib-inline = []
 multidict = []
+numpy = []
+opencv-python = []
 parso = []
 pexpect = []
 pickleshare = []
@@ -567,6 +606,7 @@ ptyprocess = []
 pygments = []
 pypokedex = []
 python-dotenv = []
+removebg = []
 requests = []
 soupsieve = []
 termcolor = []
