@@ -20,7 +20,7 @@ async def sprite(ctx,pokémon):
       await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n- Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
 @bot.command(description="Envoie les informations d'un Pokémon") 
 async def dex(ctx,pokémon):
-    #try:
+    try:
       pokemon=get_name(pokémon)
       infos=get_info(pokemon)
       if infos['type1']==infos['type2']:
@@ -42,12 +42,12 @@ async def dex(ctx,pokémon):
            final_ability.append(ability[i])
       print(final_ability)
       ability=', '.join(final_ability)
-      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom 🇬🇧: {pokemon[0]})\n**Type(s)** : {type_}\n**Talents:** {ability}\n **Stats de base** :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
+      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom 🇬🇧: {pokemon[0]})\n**Type(s)** : {type_}\n**Talents:** {ability}\n **Stats de base** :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}\n__**Localisation**__ : {loca[pokemon[1]]}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
       embed.set_thumbnail(url=f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png')
       embed.set_author(name="Pokémon Résurrection")
       await ctx.respond(embed=embed)
-    #except Exception as e:
-    #  print(e)
-    #  await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+    except Exception as e:
+      print(e)
+      await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
 keep_alive()
 bot.run(os.getenv("TOKEN"))
