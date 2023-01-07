@@ -17,6 +17,7 @@ pypokedex = "^1.6.0"
 bs4 = "^0.0.1"
 wikipedia = "^1.4.0"
 python-dotenv = "^0.21.0"
+removebg = "^0.04"
 
 [tool.poetry.dev-dependencies]
 
