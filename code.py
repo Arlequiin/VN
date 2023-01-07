@@ -4,15 +4,27 @@ from pokemon import *
 import urllib.request
 import cv2
 import re
+import requests
 #pip install git+https://github.com/Pycord-Development/pycord
 def get_name(pokemon):
-  if pokemon in data_en.keys():
+  pokemon=pokemon.lower()
+  region=''
+  if "de galar" in pokemon.lower():
+    pokemon.replace(" de galar","")
+    region="galarian/"
+  if "d'Alola" in pokemon.lower():
+    pokemon.replace(" d'alola","")
+    region="alolan/"
+  if "de Hisui" in pokemon.lower():
+    pokemon.replace(" de hisui","")
+    region="hisuian/"
+  if pokemon.lower().capitalize() in data_en.keys():
    pokemon_fr=data_en[pokemon.lower().capitalize()]
    pokemon=pokemon.lower().capitalize()
   else:
    pokemon_fr=pokemon.lower().capitalize()
    pokemon=data_fr[pokemon.capitalize()]
-  return [pokemon,pokemon_fr]
+  return [pokemon,pokemon_fr,region]
 def get_front_sprite(pokemon):
       pokemon=get_name(pokemon)[0]
       url = f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon.lower()}/front.png'
@@ -23,7 +35,6 @@ def get_front_sprite(pokemon):
       return "temp.png"
 
 def get_data(pokemon):
-    import requests
     with open("temp_stats.h",'w') as f:
         f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/pokemon/base_stats.h')).text)
     with open("temp_stats.h",'r') as f:
@@ -63,4 +74,17 @@ def get_info(pokemon):
         if ".abilities" in row:
             stats['ability']=re.search("= (.*),",row).group(1)
     return stats
-  
+def get_ability(ability):
+    ability=ability.upper()
+    with open("abilities.h",'w') as f:
+        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/text/abilities.h')).text)
+    with open("abilities.h",'r') as f:
+        content=f.readlines()
+        for row in content:
+            if ability.upper() in row:
+                row=row.replace('''("''',"<").replace('''")''',">")
+                french_ability=re.search("<(.*)>,",row).group(1)
+                break
+            else:
+              french_ability="ERROR"
+    return french_ability

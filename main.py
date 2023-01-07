@@ -27,8 +27,23 @@ async def dex(ctx,pokémon):
         type_=type_to_emote[french_types[infos['type1'].replace("TYPE_",'').lower()]]
       else:
         type_=type_to_emote[french_types[infos['type1'].replace("TYPE_",'').lower()]]+' '+type_to_emote[french_types[infos['type2'].replace("TYPE_",'').lower()]]
-      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom :flag_gb:: {pokemon[0]})\n**Type(s)** : {type_}\n**Talents:** {infos['ability']}\n **Stats de base** :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
-      embed.set_thumbnail(url=f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0]}/front.png')
+      print(infos['ability'])
+      ability=[get_ability(talent.replace(" ","")) for talent in infos["ability"].replace("{","").replace("}","").split(",")]
+      if len(ability)!=3:
+        ability.append("-------")
+      print(ability)
+      ability[2]+=" (Talent Caché)"
+      final_ability=[]
+      for i in range(len(ability)):
+        if '----' in ability[i]:
+          pass
+        else:
+          if ability[i] not in final_ability:
+           final_ability.append(ability[i])
+      print(final_ability)
+      ability=', '.join(final_ability)
+      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom :flag_gb:: {pokemon[0]})\n**Type(s)** : {type_}\n**Talents:** {ability}\n **Stats de base** :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
+      embed.set_thumbnail(url=f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[2]}{pokemon[0].lower()}/front.png')
       await ctx.respond(embed=embed)
     #except:
     #  await ctx.respond(embed=discord.Embed(title=":x: ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n- Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
