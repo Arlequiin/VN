@@ -1,4 +1,3 @@
-from rembg import remove
 from PIL import Image
 from pokemon import *
 import urllib.request
@@ -10,14 +9,29 @@ def get_name(pokemon):
   pokemon=pokemon.lower()
   region=''
   if "de galar" in pokemon.lower():
-    pokemon.replace(" de galar","")
-    region="galarian/"
-  if "d'Alola" in pokemon.lower():
-    pokemon.replace(" d'alola","")
-    region="alolan/"
-  if "de Hisui" in pokemon.lower():
-    pokemon.replace(" de hisui","")
-    region="hisuian/"
+    pokemon=pokemon.lower().replace(" de galar","")
+    region="/galarian/"
+  if "d'alola" in pokemon.lower():
+    pokemon=pokemon.lower().replace(" d'alola","")
+    region="/alolan/"
+  if "de hisui" in pokemon.lower():
+    pokemon=pokemon.lower().replace(" de hisui","")
+    region="/hisuian/"
+  if "mega-" in pokemon.lower().replace(" ","-").replace("é","e") and "charizard" not in pokemon.lower() and "mewtwo" not in pokemon.lower() and "dracaufeu" not in pokemon.lower():
+    pokemon=pokemon.lower().replace("mega-","").replace("méga-","").replace("mega ",'').replace("méga ",'')
+    region="/mega/"
+  if pokemon.lower()=="sachanobi" or pokemon.lower()=="ash-greninja":
+    pokemon="Amphinobi"
+    region="/ash/"
+  if "mewtwo" in pokemon.lower() or "charizard" in pokemon.lower() or "dracaufeu" in pokemon.lower() and "mega" in pokemon.lower().replace("é","e"):
+    if "y" in pokemon.lower():
+      region="/mega_y/"
+    else:
+      region="/mega_x/"
+    if "mewtwo" in pokemon.lower():
+      pokemon="Mewtwo"
+    else:
+      pokemon="Dracaufeu"
   if pokemon.lower().capitalize() in data_en.keys():
    pokemon_fr=data_en[pokemon.lower().capitalize()]
    pokemon=pokemon.lower().capitalize()
@@ -43,9 +57,16 @@ def get_data(pokemon):
         in_pokemon_scope=False
         for row in content:
             if in_pokemon_scope:
-                pokemon_data.append(row)
-            if pokemon.upper() in row:
+                if row in pokemon_data:
+                  break
+                else:
+                 pokemon_data.append(row)
+            if pokemon[0].upper() in row:
+              if pokemon[2]=='' and 'alola' not in row.lower() and 'galar' not in row.lower() and 'hisui' not in row.lower() and '_mega' not in row.lower() and '_ash' not in row.lower():
                 in_pokemon_scope=True
+              else:
+                if pokemon[2].upper().replace("/","") in row:
+                  in_pokemon_scope=True
             if in_pokemon_scope and '}' in row:
                 in_pokemon_scope=False
     return pokemon_data
