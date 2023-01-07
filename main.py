@@ -44,8 +44,10 @@ async def dex(ctx,pokémon):
       ability=', '.join(final_ability)
       embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom 🇬🇧: {pokemon[0]})\n**Type(s)** : {type_}\n**Talents:** {ability}\n **Stats de base** :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
       embed.set_thumbnail(url=f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png')
+      embed.set_author(name="Pokémon Résurrection")
       await ctx.respond(embed=embed)
-    #except:
-    #  await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de Legends Arceus\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+    #except Exception as e:
+    #  print(e)
+    #  await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
 keep_alive()
 bot.run(os.getenv("TOKEN"))
