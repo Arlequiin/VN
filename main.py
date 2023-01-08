@@ -49,5 +49,10 @@ async def dex(ctx,pokémon):
     except Exception as e:
       print(e)
       await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+@bot.command(description="Information sur la rom") 
+async def rom(ctx):
+  embed=discord.Embed(title="Rom actuelle",description="La rom actuelle est la version **VDEV**\n - Lien de téléchargement : *Site en cours de construction*\n - Jouer en ligne : https://resurrection.arlequiin.repl.co")
+  embed.set_author(name="Pokémon Résurrection, 2020-2023")
+  await ctx.respond(embed=embed)
 keep_alive()
 bot.run(os.getenv("TOKEN"))
