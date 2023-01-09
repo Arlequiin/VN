@@ -39,9 +39,7 @@ def get_name(pokemon):
    pokemon_fr=pokemon.lower().capitalize()
    pokemon=data_fr[pokemon.capitalize()]
   return [pokemon,pokemon_fr,region]
-def get_front_sprite(pokemon):
-      pokemon=get_name(pokemon)[0]
-      url = f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon.lower()}/front.png'
+def get_image_from_link(url):
       with urllib.request.urlopen(url) as url:
           image_data = url.read()
       with open('temp.png', 'wb') as f:
@@ -109,3 +107,17 @@ def get_ability(ability):
             else:
               french_ability="ERROR"
     return french_ability
+def removebg(url):
+    file=get_image_from_link(url)
+    im = Image.open("temp.png")
+    im = im.convert('RGBA')
+    pixels = im.load()
+    width, height = im.size
+    t=pixels[0,0]
+    for j in range(height):
+        for i in range(width):
+            if t[0]+30>pixels[i,j][0]>t[0]-30 and t[1]+30>pixels[i,j][1]>t[1]-30 and t[2]+30>pixels[i,j][2]>t[2]-30:
+                pixels[i,j]=(0,0,0,0)
+    im.save(file)
+    return file
+    
