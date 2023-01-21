@@ -6,29 +6,21 @@
 #define FLIP    0
 #define NO_FLIP 1
 
-#if P_UPDATED_STATS >= GEN_6
-    #define PIKACHU_BASE_DEFENSES\
-        .baseDefense   = 40,     \
-        .baseSpDefense = 50
-#else
-    #define PIKACHU_BASE_DEFENSES\
-        .baseDefense   = 30,     \
-        .baseSpDefense = 40
-#endif
 
 #define PIKACHU_BASE_STATS(gender, flip)                                   \
     {                                                                      \
         .baseHP        = 35,                                               \
         .baseAttack    = 55,                                               \
+        .baseDefense   = 40,                                               \
         .baseSpeed     = 90,                                               \
         .baseSpAttack  = 50,                                               \
-        PIKACHU_BASE_DEFENSES,                                             \
+        .baseSpDefense = 50,                                               \
         .type1 = TYPE_ELECTRIC,                                            \
         .type2 = TYPE_ELECTRIC,                                            \
         .catchRate = 190,                                                  \
         .expYield = 112,                                                   \
         .evYield_Speed     = 2,                                            \
-        .itemRare = ITEM_LIGHT_BALL,                                          \
+        .itemRare = ITEM_LIGHT_BALL,                                       \
         .genderRatio = gender,                                             \
         .eggCycles = 10,                                                   \
         .friendship = 70,                                                  \

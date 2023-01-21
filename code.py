@@ -132,8 +132,22 @@ def get_learnset(pokemon):
                 in_pokemon_scope=True
             if in_pokemon_scope and 'LEVEL_UP_MOVE' in row:
                     in_pokemon_scope=True
-                    learnset[row.replace('LEVEL_UP_MOVE(','').replace('),','').split(",")[0].strip().replace('0','Évolution')]=row.replace('LEVEL_UP_MOVE(','').replace('),','').split(",")[1].strip()
+                    prov_list=row.replace('LEVEL_UP_MOVE(','').replace('),','').split(",")
+                    if prov_list[0].strip()=='0':
+                      prov_list[0]='Évolution'
+                    learnset[prov_list[0].strip()]=get_move_name(prov_list[1].strip())
             if in_pokemon_scope and '}' in row:
                 in_pokemon_scope=False
                 break
     return learnset
+def get_move_name(moveId):
+    with open("moves_names.h",'w') as f:
+        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/text/move_names.h')).text)
+    with open("moves_names.h",'r') as f:
+        content=f.readlines()
+        names=[]
+        for row in content:
+            if moveId in row:
+                result=re.search('<(.*)>',row.replace('''("''',"<").replace('''")''',">"))
+                names.append(result.group(1))
+    return names[0]
