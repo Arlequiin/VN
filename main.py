@@ -1,4 +1,6 @@
 from keep_alive import keep_alive
+import os
+os.system("pip install py-cord==2.0.0b1")
 import discord
 from pokemon import *
 from PIL import Image

@@ -1,7 +1,6 @@
 from PIL import Image
 from pokemon import *
 import urllib.request
-import cv2
 import re
 import requests
 #pip install git+https://github.com/Pycord-Development/pycord
@@ -120,4 +119,21 @@ def removebg(url):
                 pixels[i,j]=(0,0,0,0)
     im.save(file)
     return file
-    
+def get_learnset(pokemon):
+    pokemon=get_name(pokemon)[0].lower().capitalize()
+    with open("learnsets.h",'w') as f:
+        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/pokemon/level_up_learnsets.h')).text)
+    with open("learnsets.h",'r') as f:
+        content=f.readlines()
+        learnset={}
+        in_pokemon_scope=False
+        for row in content:
+            if pokemon in row:
+                in_pokemon_scope=True
+            if in_pokemon_scope and 'LEVEL_UP_MOVE' in row:
+                    in_pokemon_scope=True
+                    learnset[row.replace('LEVEL_UP_MOVE(','').replace('),','').split(",")[0].strip().replace('0','Évolution')]=row.replace('LEVEL_UP_MOVE(','').replace('),','').split(",")[1].strip()
+            if in_pokemon_scope and '}' in row:
+                in_pokemon_scope=False
+                break
+    return learnset
