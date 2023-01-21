@@ -14,16 +14,9 @@ bot = discord.Bot()
 async def ping(ctx):
   await ctx.respond(f"Pong! {bot.latency}")
 
-@bot.command(description="Envoie le learnset d'un Pokémon") 
-async def learnset(ctx,pokémon):
-  try:
-    dico=get_learnset(pokémon)
-    embed_content=''
-    for i in range(len(dico)):
-      embed_content+=dico.keys()[i]+' : '+dico.values()[i]+'\n'
-    await ctx.respond(embed=discord.Embed(title=get_name(pokémon)[1],description=embed_content))
-  except:
-    await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n- Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+@bot.command(description="Envoie le pourcentage du Pokédex que vous pouvez compléter actuellement") 
+async def dexstat(ctx):
+  await ctx.respond(embed=discord.Embed(title="% Pokédex",description=f"Peut être complété à {round(capturable_percent(),2)}%"))
   
 @bot.command(description="Envoie le sprite d'un Pokémon") 
 async def sprite(ctx,pokémon):

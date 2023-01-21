@@ -151,3 +151,9 @@ def get_move_name(moveId):
                 result=re.search('<(.*)>',row.replace('''("''',"<").replace('''")''',">"))
                 names.append(result.group(1))
     return names[0]
+def capturable_percent():
+    i=0
+    for elem in loca.values():
+        if elem!="*Localisation inconnue*":
+            i+=1
+    return i/len(loca.values())*100
