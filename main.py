@@ -1,6 +1,6 @@
 from keep_alive import keep_alive
 import os
-os.system("pip install py-cord==2.0.0b1")
+os.system("pip install py-cord==2.3.2")
 import discord
 from pokemon import *
 from PIL import Image
@@ -34,7 +34,7 @@ async def sprite(ctx,pokémon):
 ##############################################################################################
 @bot.command(description="Envoie les informations d'un Pokémon") 
 async def dex(ctx,pokémon):
-    msg=await ctx.send(embed=discord.Embed(title="Veuillez Patienter :clock:",description="Votre commande est en cours de traitement, cela peut prendre jusqu'à 5 secondes."))
+    msg=await ctx.respond(embed=discord.Embed(title="Veuillez Patienter :clock:",description="Votre commande est en cours de traitement, cela peut prendre jusqu'à 5 secondes."))
     #msg=msg.id
     #channel = ctx.channel
     #msg = await channel.fetch_message(msg)
@@ -70,11 +70,11 @@ async def dex(ctx,pokémon):
       file = discord.File(removebg(f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png'))  
       embed.set_thumbnail(url='attachment://temp.png')
       embed.set_author(name="Pokémon Résurrection")
-      await msg.edit(file=file, embed=embed)
+      await msg.edit_original_response(file=file, embed=embed)
     #-------------------------------------------
     except Exception as e:
       print(e)
-      await msg.edit(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+      await msg.edit_original_response(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
 ##############################################################################################
 @bot.command(description="Information sur la rom") 
 async def rom(ctx):
