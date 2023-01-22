@@ -57,7 +57,8 @@ async def dex(ctx,pokémon):
       embed_content=''
       for i in range(len(dico)):
        embed_content+=list(dico.keys())[i]+' : '+list(dico.values())[i]+'\n'
-      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom 🇬🇧: {pokemon[0]})\n**Type(s)** : {type_}\n**Talents:** {ability}\n **Stats de base** :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}\n__**Learnset**__\n{embed_content}\n__**Localisation**__ : {loca[pokemon[1]]}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
+      sumbs=sum(int(e) for e in [infos['hp'],infos['atk'],infos['def'],infos['sp.atk'],infos['sp.def'],infos['speed']])
+      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom 🇬🇧: {pokemon[0]})\n__**Type(s)**__ : {type_}\n__**Talents:**__ {ability}\n __**Stats de base**__ :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}\nBS : {sumbs}\n__**Learnset**__\n{embed_content}\n__**Localisation**__ : {loca[pokemon[1]]}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
       print(f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png')
       file = discord.File(removebg(f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png'))  
       embed.set_thumbnail(url='attachment://temp.png')
