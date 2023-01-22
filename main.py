@@ -11,7 +11,7 @@ bot = discord.Bot()
 @bot.event
 async def on_ready():
   game = discord.Game("Pokémon Résurrection")
-  await bot.change_presence(status=discord.Status.idle, activity=game)
+  await bot.change_presence(status=discord.Status.online, activity=game)
 #bot.change_presence(activity=discord.Game(name="Pokémon Résurrection"))
 #----------------------------------------------------
 @bot.command(description="Envoie la latence du bot") 
