@@ -13,24 +13,31 @@ async def on_ready():
   game = discord.Game("Pokémon Résurrection")
   await bot.change_presence(status=discord.Status.online, activity=game)
 #bot.change_presence(activity=discord.Game(name="Pokémon Résurrection"))
-#----------------------------------------------------
+##############################################################################################
 @bot.command(description="Envoie la latence du bot") 
 async def ping(ctx):
   await ctx.respond(f"Pong! {bot.latency}")
-
+##############################################################################################
 @bot.command(description="Envoie le pourcentage du Pokédex que vous pouvez compléter actuellement") 
 async def dexstat(ctx):
   stat=capturable_percent()
   await ctx.respond(embed=discord.Embed(title="Pokédex",description=f"**Le Pokédex peut actuellement être complété à {round(stat[0],2)}%**\n__Kanto__ : {stat[1][0]}/151\n__Johto__ : {stat[1][1]}/100\n__Hoenn__ : {stat[1][2]}/135\n __Sinnoh__ : {stat[1][3]}/107\n__Unys__ : {stat[1][4]}/156\n__Kalos__ : {stat[1][5]}/72\n__Alola__ : {stat[1][6]}/88\n__Galar__ : {stat[1][7]}/96",color=0xd0361b))
-  
+##############################################################################################
 @bot.command(description="Envoie le sprite d'un Pokémon") 
 async def sprite(ctx,pokémon):
     try:
       await ctx.respond(file=discord.File(get_front_sprite(pokémon)))
     except:
       await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n- Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+
+
+##############################################################################################
 @bot.command(description="Envoie les informations d'un Pokémon") 
 async def dex(ctx,pokémon):
+    msg=await ctx.send(embed=discord.Embed(title="Veuillez Patienter :clock:",description="Votre commande est en cours de traitement, cela peut prendre jusqu'à 5 secondes."))
+    #msg=msg.id
+    #channel = ctx.channel
+    #msg = await channel.fetch_message(msg)
     try:
       pokemon=get_name(pokémon)
       infos=get_info(pokemon)
@@ -63,14 +70,17 @@ async def dex(ctx,pokémon):
       file = discord.File(removebg(f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png'))  
       embed.set_thumbnail(url='attachment://temp.png')
       embed.set_author(name="Pokémon Résurrection")
-      await ctx.respond(file=file, embed=embed)
+      await msg.edit(file=file, embed=embed)
+    #-------------------------------------------
     except Exception as e:
       print(e)
-      await ctx.respond(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+      await msg.edit(embed=discord.Embed(title="❌ ERREUR",description="Vous avez :\n- Mal saisi le nom du Pokémon (ex : `Majspic` au lieu de `Majaspic`)\n - Vous avez saisi le nom d'un Pokémon de la 9ème génération (ex : `Poussacha`)\n*Si rien de tout cela n'est vrai, veuillez contacter `Arlequiin#1853`*"))
+##############################################################################################
 @bot.command(description="Information sur la rom") 
 async def rom(ctx):
   embed=discord.Embed(title="Rom actuelle",description="La rom actuelle est la version **DEMO 1**\n - Télécharger la dernière version : https://ko-fi.com/s/73114f6144\n - Toutes les versions : https://arlequiin.github.io/resurrection/downloads \n - Jouer en ligne : https://resurrection.arlequiin.repl.co")
   embed.set_author(name="Pokémon Résurrection, 2020-2023")
   await ctx.respond(embed=embed)
+##############################################################################################
 keep_alive()
 bot.run(os.getenv("TOKEN"))

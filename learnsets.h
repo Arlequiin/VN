@@ -7940,6 +7940,7 @@ static const struct LevelUpMove sGrotleLevelUpLearnset[] = {
 
 static const struct LevelUpMove sTorterraLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 0, MOVE_EARTHQUAKE),
+    LEVEL_UP_MOVE( 0, MOVE_SHELL_SMASH),
     LEVEL_UP_MOVE( 1, MOVE_EARTHQUAKE),
     LEVEL_UP_MOVE( 1, MOVE_WOOD_HAMMER),
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
