@@ -153,7 +153,15 @@ def get_move_name(moveId):
     return names[0]
 def capturable_percent():
     i=0
+    j=0
+    i2=0
+    gens=[]
     for elem in loca.values():
+        j+=1
         if elem!="*Localisation inconnue*":
             i+=1
-    return i/len(loca.values())*100
+            i2+=1
+        if j in [151,252,386,494,649,721,810,898]:
+            gens.append(i2)
+            i2=0
+    return [i/len(loca.values())*100,gens]

@@ -8,6 +8,10 @@ import os
 from code import *
 
 bot = discord.Bot()
+@bot.event
+async def on_ready():
+  game = discord.Game("Pokémon Résurrection")
+  await bot.change_presence(status=discord.Status.idle, activity=game)
 #bot.change_presence(activity=discord.Game(name="Pokémon Résurrection"))
 #----------------------------------------------------
 @bot.command(description="Envoie la latence du bot") 
@@ -16,7 +20,8 @@ async def ping(ctx):
 
 @bot.command(description="Envoie le pourcentage du Pokédex que vous pouvez compléter actuellement") 
 async def dexstat(ctx):
-  await ctx.respond(embed=discord.Embed(title="% Pokédex",description=f"Peut être complété à {round(capturable_percent(),2)}%"))
+  stat=capturable_percent()
+  await ctx.respond(embed=discord.Embed(title="Pokédex",description=f"**Le Pokédex peut actuellement être complété à {round(stat[0],2)}%**\n__Kanto__ : {stat[1][0]}/151\n__Johto__ : {stat[1][1]}/100\n__Hoenn__ : {stat[1][2]}/135\n __Sinnoh__ : {stat[1][3]}/107\n__Unys__ : {stat[1][4]}/156\n__Kalos__ : {stat[1][5]}/72\n__Alola__ : {stat[1][6]}/88\n__Galar__ : {stat[1][7]}/96",color=0xd0361b))
   
 @bot.command(description="Envoie le sprite d'un Pokémon") 
 async def sprite(ctx,pokémon):
