@@ -22,10 +22,10 @@ def get_name(pokemon):
   if pokemon.lower()=="sachanobi" or pokemon.lower()=="ash-greninja":
     pokemon="Amphinobi"
     region="/ash/"
-  if "mewtwo" in pokemon.lower() or "charizard" in pokemon.lower() or "dracaufeu" in pokemon.lower() and "mega" in pokemon.lower().replace("é","e"):
+  elif "mewtwo" in pokemon.lower() or "charizard" in pokemon.lower() or "dracaufeu" in pokemon.lower() and "mega" in pokemon.lower().replace("é","e"):
     if "y" in pokemon.lower():
       region="/mega_y/"
-    else:
+    elif "x" in pokemon.lower():
       region="/mega_x/"
     if "mewtwo" in pokemon.lower():
       pokemon="Mewtwo"
@@ -58,7 +58,7 @@ def get_data(pokemon):
                   break
                 else:
                  pokemon_data.append(row)
-            if pokemon[0].upper() in row:
+            if 'SPECIES_'+pokemon[0].upper()+']' in row:
               if pokemon[2]=='' and 'alola' not in row.lower() and 'galar' not in row.lower() and 'hisui' not in row.lower() and '_mega' not in row.lower() and '_ash' not in row.lower():
                 in_pokemon_scope=True
               else:
@@ -128,7 +128,7 @@ def get_learnset(pokemon):
         learnset={}
         in_pokemon_scope=False
         for row in content:
-            if pokemon in row:
+            if pokemon+'Level' in row:
                 in_pokemon_scope=True
             if in_pokemon_scope and 'LEVEL_UP_MOVE' in row:
                     in_pokemon_scope=True
@@ -147,7 +147,7 @@ def get_move_name(moveId):
         content=f.readlines()
         names=[]
         for row in content:
-            if moveId in row:
+            if moveId in row and 'Z_MOVE' not in row:
                 result=re.search('<(.*)>',row.replace('''("''',"<").replace('''")''',">"))
                 names.append(result.group(1))
     return names[0]

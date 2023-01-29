@@ -60,12 +60,12 @@ async def dex(ctx,pokémon):
            final_ability.append(ability[i])
       print(final_ability)
       ability=', '.join(final_ability)
-      dico=get_learnset(pokémon)
+      dico=get_learnset(pokemon[0])
       embed_content=''
       for i in range(len(dico)):
        embed_content+=list(dico.keys())[i]+' : '+list(dico.values())[i]+'\n'
       sumbs=sum(int(e) for e in [infos['hp'],infos['atk'],infos['def'],infos['sp.atk'],infos['sp.def'],infos['speed']])
-      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°???__ (Nom 🇬🇧: {pokemon[0]})\n__**Type(s)**__ : {type_}\n__**Talents:**__ {ability}\n __**Stats de base**__ :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}\nBS : {sumbs}\n__**Learnset**__\n{embed_content}\n__**Localisation**__ : {loca[pokemon[1]]}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
+      embed = discord.Embed(title=f"{pokemon[1]}",description=f"__N°{list(loca.keys()).index(pokemon[1])+1}__ (Nom 🇬🇧: {pokemon[0]})\n__**Type(s)**__ : {type_}\n__**Talents:**__ {ability}\n __**Stats de base**__ :\nPV : {infos['hp']}\nAtq : {infos['atk']}\nDef : {infos['def']}\nAtq.Spé : {infos['sp.atk']}\nDef.Spé : {infos['sp.def']}\nVit : {infos['speed']}\nBS : {sumbs}\n__**Learnset**__\n{embed_content}\n__**Localisation**__ : {loca[pokemon[1]]}",color=type_to_color[french_types[infos['type1'].replace("TYPE_",'').lower()]])
       print(f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png')
       file = discord.File(removebg(f'https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/graphics/pokemon/{pokemon[0].lower()}{pokemon[2]}/front.png'))  
       embed.set_thumbnail(url='attachment://temp.png')
@@ -78,9 +78,14 @@ async def dex(ctx,pokémon):
 ##############################################################################################
 @bot.command(description="Information sur la rom") 
 async def rom(ctx):
-  embed=discord.Embed(title="Rom actuelle",description="La rom actuelle est la version **DEMO 1**\n - Télécharger la dernière version : https://ko-fi.com/s/73114f6144\n - Toutes les versions : https://arlequiin.github.io/resurrection/downloads \n - Jouer en ligne : https://resurrection.arlequiin.repl.co")
+  embed=discord.Embed(title="Rom actuelle",description="La rom actuelle est la version **DEMO 1.2**\n - Télécharger la dernière version : https://ko-fi.com/s/73114f6144\n - Toutes les versions : https://arlequiin.github.io/resurrection/downloads.html \n - Jouer en ligne : https://resurrection.arlequiin.repl.co")
   embed.set_author(name="Pokémon Résurrection, 2020-2023")
   await ctx.respond(embed=embed)
 ##############################################################################################
-keep_alive()
-bot.run(os.getenv("TOKEN"))
+while __name__ == '__main__':
+  try:
+    keep_alive()
+    bot.run(os.getenv("TOKEN"))
+  except:
+    print("API DISCORD DE MERDE!!!! RESTART")
+    os.system('kill 1')
