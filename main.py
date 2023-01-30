@@ -14,6 +14,18 @@ async def on_ready():
   await bot.change_presence(status=discord.Status.online, activity=game)
 #bot.change_presence(activity=discord.Game(name="Pokémon Résurrection"))
 ##############################################################################################
+badwords=['pute','connasse','connard','connard','nique ta']
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    if '793941611418615829' in message.content:
+      await message.add_reaction("<:pikapinged:842052761645613056>")
+
+      
+    if any(badword in message.content.lower() for badword in badwords):
+          await message.channel.send('Gros mot!')
+##############################################################################################
 @bot.command(description="Envoie la latence du bot") 
 async def ping(ctx):
   await ctx.respond(f"Pong! {bot.latency}")
