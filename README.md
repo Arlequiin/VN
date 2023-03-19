@@ -1,4 +1,4 @@
-<img src="boxart.png"><br>
+<img src="data/boxart.png"><br>
 # Pokémon Résurrection
 Please check related projects :
 - <a href="https://github.com/Arlequiin/resurrection">Pokémon Résurrection</a>
