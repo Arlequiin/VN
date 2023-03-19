@@ -41,14 +41,14 @@ def get_name(pokemon):
 def get_image_from_link(url):
       with urllib.request.urlopen(url) as url:
           image_data = url.read()
-      with open('temp.png', 'wb') as f:
+      with open('data/temp.png', 'wb') as f:
           f.write(image_data)
-      return "temp.png"
+      return "data/temp.png"
 
 def get_data(pokemon):
-    with open("temp_stats.h",'w') as f:
-        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/pokemon/base_stats.h')).text)
-    with open("temp_stats.h",'r') as f:
+    with open("data/temp_stats.h",'w') as f:
+        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/resurrection/master/src/data/pokemon/species_info.h')).text)
+    with open("data/temp_stats.h",'r') as f:
         content=f.readlines()
         pokemon_data=[]
         in_pokemon_scope=False
@@ -64,10 +64,11 @@ def get_data(pokemon):
               else:
                 if pokemon[2].upper().replace("/","") in row:
                   in_pokemon_scope=True
-            if in_pokemon_scope and '}' in row:
+            if in_pokemon_scope and 'noFlip' in row:
                 in_pokemon_scope=False
     return pokemon_data
 def get_info(pokemon):
+    print(pokemon)
     rows=get_data(pokemon)
     stats={}
     for row in rows:
@@ -83,20 +84,24 @@ def get_info(pokemon):
             stats['sp.def']=re.search("= (.*),",row).group(1)
         if ".baseSpeed" in row:
             stats['speed']=re.search("= (.*),",row).group(1)
-        if ".type1" in row:
-            stats['type1']=re.search("= (.*),",row).group(1)
-        if ".type2" in row:
-            stats['type2']=re.search("= (.*),",row).group(1)
+        if ".types" in row:
+            row=row.replace("{ ","<").replace(" }",">").replace("}",">")
+            row=re.search("<(.*)>",row).group(1)
+            row=row.split(", ")
+            stats['type1']=row[0]
+            stats['type2']=row[1]
         if ".catchRate" in row:
             stats['catch']=re.search("= (.*),",row).group(1)
         if ".abilities" in row:
+            print("CHECK "*8)
             stats['ability']=re.search("= (.*),",row).group(1)
+    print(stats)
     return stats
 def get_ability(ability):
     ability=ability.upper()
-    with open("abilities.h",'w') as f:
-        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/text/abilities.h')).text)
-    with open("abilities.h",'r') as f:
+    with open("data/abilities.h",'w') as f:
+        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/resurrection/master/src/data/text/abilities.h')).text)
+    with open("data/abilities.h",'r') as f:
         content=f.readlines()
         for row in content:
             if ability.upper() in row:
@@ -108,7 +113,7 @@ def get_ability(ability):
     return french_ability
 def removebg(url):
     file=get_image_from_link(url)
-    im = Image.open("temp.png")
+    im = Image.open("data/temp.png")
     im = im.convert('RGBA')
     pixels = im.load()
     width, height = im.size
@@ -121,9 +126,9 @@ def removebg(url):
     return file
 def get_learnset(pokemon):
     pokemon=get_name(pokemon)[0].lower().capitalize()
-    with open("learnsets.h",'w') as f:
-        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/pokemon/level_up_learnsets.h')).text)
-    with open("learnsets.h",'r') as f:
+    with open("data/learnsets.h",'w') as f:
+        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/resurrection/master/src/data/pokemon/level_up_learnsets.h')).text)
+    with open("data/learnsets.h",'r') as f:
         content=f.readlines()
         learnset={}
         in_pokemon_scope=False
@@ -141,9 +146,9 @@ def get_learnset(pokemon):
                 break
     return learnset
 def get_move_name(moveId):
-    with open("moves_names.h",'w') as f:
-        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/pokeemerald-expansion/master/src/data/text/move_names.h')).text)
-    with open("moves_names.h",'r') as f:
+    with open("data/moves_names.h",'w') as f:
+        f.write((requests.get('https://raw.githubusercontent.com/Arlequiin/resurrection/master/src/data/text/move_names.h')).text)
+    with open("data/moves_names.h",'r') as f:
         content=f.readlines()
         names=[]
         for row in content:

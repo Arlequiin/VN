@@ -7,7 +7,7 @@ Please check related projects :
 <br>Join the <a href="https://discord.gg/krD4e8JT">discord</a> of Pokémon Résurrection
 
 # What is this?
-<img src='dragon.png'><br>
+<img src='data/dragon.png'><br>
 <p>This repository contains the source code of Pokémon Résurrection, if you need more info about the game, check the official website.</p>
 
 # Credits for this repo
